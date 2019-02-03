@@ -1,0 +1,151 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'
+
+apply from: 'detekt.gradle'
+
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion as Integer
+    buildToolsVersion rootProject.ext.buildToolsVersion as String
+
+    defaultConfig {
+        // TODO change package name
+        applicationId "com.prisyazhnuy.streaming"
+        minSdkVersion rootProject.ext.minSdkVersion as Integer
+        targetSdkVersion rootProject.ext.targetSdkVersion as Integer
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath true
+            }
+        }
+    }
+
+//    println("Debug Build number $buildNoDevelop")
+//    println("Prod Build number $buildNoProd")
+//    println("Build Git Hash $buildGitHash")
+
+    signingConfigs {
+        debug {
+            storeFile file("./debug.keystore")
+            storePassword "android"
+            keyAlias "androiddebugkey"
+            keyPassword "android"
+        }
+    }
+    buildTypes {
+        all {
+//            buildConfigField "String", "GIT_HASH", "\"$buildGitHash\""
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            // TODO change name and password
+            buildConfigField "String", "SECURE_PREF_NAME", '"name_prefs.xml"'
+            buildConfigField "String", "SECURE_PREF_PASSWORD", '"qwerty123"'
+            buildConfigField "Integer", "LOCALHOST_PORT", '8080'
+        }
+        // TODO change ENDPOINT
+        debug {
+            minifyEnabled false
+            debuggable true
+//            versionNameSuffix "." + buildNoDevelop + " Dev_" + buildGitHash
+            signingConfig signingConfigs.debug
+            buildConfigField "String", "ENDPOINT", '"https://project.endpoint.com"'
+        }
+        stage {
+            minifyEnabled false
+            debuggable true
+//            versionNameSuffix "." + buildNoDevelop + " Stage_" + buildGitHash
+            signingConfig signingConfigs.debug
+            buildConfigField "String", "ENDPOINT", '"https://project.endpoint.com"'
+        }
+        release {
+            minifyEnabled true
+            debuggable false
+//            versionNameSuffix "." + buildNoProd
+            buildConfigField "String", "ENDPOINT", '"https://project.endpoint.com"'
+        }
+    }
+    // for jenkins
+    packagingOptions {
+        exclude 'META-INF/NOTICE' // It is not include NOTICE file
+        exclude 'META-INF/LICENSE' // It is not include LICENSE file
+        exclude 'META-INF/rxjava.properties' // It is not include LICENSE file
+    }
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+}
+
+dependencies {
+    def testVersion = "1.1.0"
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation "androidx.test.ext:junit:1.0.0"
+    androidTestImplementation "androidx.test:runner:$testVersion"
+    androidTestImplementation "androidx.test:rules:$testVersion"
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    androidTestImplementation "androidx.arch.core:core-testing:2.0.0"
+    implementation "com.squareup.okhttp3:mockwebserver:3.12.0"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    // Support
+    implementation supportDependencies.lifecycleExtension
+    implementation supportDependencies.constraintlayout
+    implementation supportDependencies.recyclerView
+    implementation supportDependencies.appCompat
+    implementation supportDependencies.multiDex
+    implementation supportDependencies.kotlin
+    implementation supportDependencies.design
+
+    // Bootstrap
+    implementation bootstrapDependencies.validators
+    implementation bootstrapDependencies.rxBus
+    implementation bootstrapDependencies.core
+    implementation bootstrapDependencies.ext
+
+    // Stetho
+    implementation "com.facebook.stetho:stetho:$stethoVersoin"
+
+    // Room
+    implementation roomDependencies.migration
+    implementation roomDependencies.compiler
+    implementation roomDependencies.runtime
+    implementation roomDependencies.rxjava2
+    implementation roomDependencies.testing
+    implementation roomDependencies.common
+    implementation roomDependencies.guava
+
+    // RxJava
+    implementation rxJavaDependencies.rxJava2
+
+    // Retrofit
+    implementation retrofitDependencies.converter
+    implementation retrofitDependencies.retrofit
+    implementation retrofitDependencies.adapter
+
+    // Jackson
+    implementation jacksonDependencies.interceptor
+    implementation jacksonDependencies.annotations
+    implementation jacksonDependencies.databind
+    implementation jacksonDependencies.core
+    implementation jacksonDependencies.joda
+
+    // Secure preferences
+    implementation securePreferencesDependencies.lib
+
+    // LoggingInterceptor
+    implementation('com.github.ihsanbal:LoggingInterceptor:2.0.7') {
+        exclude group: 'org.json', module: 'json'
+    }
+
+    // OkHttpProfiler
+    implementation "com.itkacher.okhttpprofiler:okhttpprofiler:1.0.4"
+}

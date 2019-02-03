@@ -1,0 +1,108 @@
+
+buildscript {
+    ext.kotlin_version = '1.2.71'
+    ext.build_gradle_version = '3.2.1'
+    ext.detekt_version =  "1.0.0.RC7-3"
+
+    repositories {
+        google()
+        jcenter()
+        maven { url "https://plugins.gradle.org/m2/" }
+        maven { url 'https://jitpack.io' }
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:$build_gradle_version"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "gradle.plugin.io.gitlab.arturbosch:detekt-gradle-plugin:$detekt_version"
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        maven { url "https://plugins.gradle.org/m2/" }
+        maven { url 'https://jitpack.io' }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+ext {
+    //TODO update version of libraries
+    compileSdkVersion = 28
+    minSdkVersion = 21
+    buildToolsVersion = '28.0.3'
+    targetSdkVersion = 28
+
+    archVersion = "2.0.0"
+    supportVersion = "1.0.0"
+    constraintlayoutVersion = "1.1.2"
+    multiDexVersion = "2.0.0"
+
+    lifeCycleVersion = '1.0.0'
+    rxJava2Version = '2.1.16'
+
+    bootstrapVersion = "0.1.9"
+
+    stethoVersoin = "1.5.0"
+
+    retrofit_version = '2.3.0'
+
+    jackson_version = '2.9.3'
+
+    secure_preferences_version = '0.1.4'
+
+    supportDependencies = [
+            kotlin            : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version",
+            appCompat         : "androidx.appcompat:appcompat:$supportVersion",
+            recyclerView      : "androidx.recyclerview:recyclerview:$supportVersion",
+            design            : "com.google.android.material:material:$supportVersion",
+            lifecycleExtension: "androidx.lifecycle:lifecycle-extensions:$archVersion",
+            constraintlayout  : "androidx.constraintlayout:constraintlayout:$constraintlayoutVersion",
+            multiDex          : "androidx.multidex:multidex:$multiDexVersion",
+    ]
+
+    roomDependencies = [
+            common   : "androidx.room:room-common:$archVersion",
+            compiler : "androidx.room:room-compiler:$archVersion",
+            guava    : "androidx.room:room-guava:$archVersion",
+            migration: "androidx.room:room-migration:$archVersion",
+            runtime  : "androidx.room:room-runtime:$archVersion",
+            rxjava2  : "androidx.room:room-rxjava2:$archVersion",
+            testing  : "androidx.room:room-testing:$archVersion"
+    ]
+
+    rxJavaDependencies = [
+            rxJava2: "io.reactivex.rxjava2:rxjava:$rxJava2Version"
+    ]
+
+    bootstrapDependencies = [
+            core      : "com.cleveroad.bootstrap:kotlin-core:$bootstrapVersion",
+            validators: "com.cleveroad.bootstrap:kotlin-validators:$bootstrapVersion",
+            rxBus     : "com.cleveroad.bootstrap:kotlin-rx-bus:$bootstrapVersion",
+            ext       : "com.cleveroad.bootstrap:kotlin-ext:$bootstrapVersion"
+    ]
+
+    retrofitDependencies = [
+            converter: "com.squareup.retrofit2:converter-jackson:$retrofit_version",
+            adapter  : "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version",
+            retrofit : "com.squareup.retrofit2:retrofit:$retrofit_version"
+    ]
+
+    jacksonDependencies = [
+            joda       : "com.fasterxml.jackson.datatype:jackson-datatype-joda:$jackson_version",
+            annotations: "com.fasterxml.jackson.core:jackson-annotations:$jackson_version",
+            databind   : "com.fasterxml.jackson.core:jackson-databind:$jackson_version",
+            core       : "com.fasterxml.jackson.core:jackson-core:$jackson_version",
+            interceptor: 'com.squareup.okhttp3:logging-interceptor:3.9.0'
+    ]
+
+    securePreferencesDependencies = [
+            lib: "com.scottyab:secure-preferences-lib:$secure_preferences_version"
+    ]
+}
+
+apply plugin: "io.gitlab.arturbosch.detekt"
