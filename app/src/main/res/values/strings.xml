@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">NewProject</string>
+    <string name="app_name">VideoStreaming</string>
 
     <!--error-->
     <string name="server_error">Server error</string>
@@ -12,4 +12,5 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="confirm_password">Confirm password</string>
+    <string name="broadcast">Broadcast</string>
 </resources>

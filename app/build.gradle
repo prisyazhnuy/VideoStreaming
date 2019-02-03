@@ -49,6 +49,11 @@ android {
             buildConfigField "String", "SECURE_PREF_NAME", '"name_prefs.xml"'
             buildConfigField "String", "SECURE_PREF_PASSWORD", '"qwerty123"'
             buildConfigField "Integer", "LOCALHOST_PORT", '8080'
+            buildConfigField "String", "WOWZA_HOST_ADDRESS", '"live.someserver.net"'
+            buildConfigField "Integer", "WOWZA_PORT", '1935'
+            buildConfigField "String", "WOWZA_APP_NAME", '"live.someserver.net"'
+            buildConfigField "String", "WOWZA_STREAM_NAME", '"test"'
+            buildConfigField "String", "WOWZA_API_KEY", '"GOSK-XXXX-XXXX-XXXX-XXXX-XXXX"'
         }
         // TODO change ENDPOINT
         debug {
@@ -80,6 +85,12 @@ android {
     }
     dexOptions {
         javaMaxHeapSize "4g"
+    }
+
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
     }
 }
 
@@ -148,4 +159,9 @@ dependencies {
 
     // OkHttpProfiler
     implementation "com.itkacher.okhttpprofiler:okhttpprofiler:1.0.4"
+
+    implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
+
+    // The GoCoder SDK library dependency declaration
+    implementation 'com.wowza.gocoder.sdk.android:com.wowza.gocoder.sdk:1.5b7@aar'
 }

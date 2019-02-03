@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import com.prisyazhnuy.streaming.R
 import com.prisyazhnuy.streaming.ui.base.BaseActivity
-import com.prisyazhnuy.streaming.ui.screens.auth.AuthActivity
+import com.prisyazhnuy.streaming.ui.screens.wowza.broadcast.BroadcastFragment
 
 class SplashActivity : BaseActivity<SplashViewModel>() {
 
@@ -27,15 +27,14 @@ class SplashActivity : BaseActivity<SplashViewModel>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        openAuthScreen()
+        openBroadcast()
     }
 
     override fun observeLiveData(viewModel: SplashViewModel) {
         // Put your code here....
     }
 
-    private fun openAuthScreen() {
-        AuthActivity.start(this)
-        finish()
+    private fun openBroadcast() {
+        replaceFragment(BroadcastFragment.newInstance(), false)
     }
 }
