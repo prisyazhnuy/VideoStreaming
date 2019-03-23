@@ -49,11 +49,14 @@ android {
             buildConfigField "String", "SECURE_PREF_NAME", '"name_prefs.xml"'
             buildConfigField "String", "SECURE_PREF_PASSWORD", '"qwerty123"'
             buildConfigField "Integer", "LOCALHOST_PORT", '8080'
-            buildConfigField "String", "WOWZA_HOST_ADDRESS", '"live.someserver.net"'
+//            buildConfigField "String", "WOWZA_HOST_ADDRESS", '"192.168.0.103"'
+            buildConfigField "String", "WOWZA_HOST_ADDRESS", '"358928.entrypoint.cloud.wowza.com"'
             buildConfigField "Integer", "WOWZA_PORT", '1935'
-            buildConfigField "String", "WOWZA_APP_NAME", '"live.someserver.net"'
-            buildConfigField "String", "WOWZA_STREAM_NAME", '"test"'
-            buildConfigField "String", "WOWZA_API_KEY", '"GOSK-XXXX-XXXX-XXXX-XXXX-XXXX"'
+//            buildConfigField "String", "WOWZA_APP_NAME", '"live"'
+            buildConfigField "String", "WOWZA_APP_NAME", '"app-9915"'
+//            buildConfigField "String", "WOWZA_STREAM_NAME", '"myStream"'
+            buildConfigField "String", "WOWZA_STREAM_NAME", '"d5fb0d67"'
+            buildConfigField "String", "WOWZA_API_KEY", '"GOSK-3A46-010C-044E-2484-8EEF"'
         }
         // TODO change ENDPOINT
         debug {

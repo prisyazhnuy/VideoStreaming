@@ -6,7 +6,6 @@
     <string name="no_internet_connection_error">No internet connection</string>
 
     <string name="sign_in">Sign In</string>
-    <string name="sign_up">Sign up</string>
     <string name="first_name">First name</string>
     <string name="last_name">Last name</string>
     <string name="email">Email</string>
@@ -18,4 +17,5 @@
     <string name="wowza">Wowza</string>
     <string name="stop">Stop</string>
     <string name="play">Play</string>
+    <string name="stream_name">Stream name</string>
 </resources>

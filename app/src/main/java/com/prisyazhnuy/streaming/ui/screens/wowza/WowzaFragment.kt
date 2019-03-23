@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import com.cleveroad.bootstrap.kotlin_ext.setClickListeners
 import com.prisyazhnuy.streaming.R
+import com.prisyazhnuy.streaming.extensions.text
 import com.prisyazhnuy.streaming.ui.base.BaseFragment
 import com.prisyazhnuy.streaming.ui.screens.wowza.broadcast.BroadcastFragment
 import com.prisyazhnuy.streaming.ui.screens.wowza.playback.PlaybackFragment
@@ -43,11 +44,11 @@ class WowzaFragment : BaseFragment<WowzaVM>(),
     }
 
     private fun openBroadcast() {
-        replaceFragment(BroadcastFragment.newInstance())
+        replaceFragment(BroadcastFragment.newInstance(etStreamName.text()))
     }
 
     private fun openPlayback() {
-        replaceFragment(PlaybackFragment.newInstance())
+        replaceFragment(PlaybackFragment.newInstance(etStreamName.text()))
     }
 
     override fun onBackPressed(): Boolean {

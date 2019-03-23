@@ -14,11 +14,11 @@ abstract class BaseFragment<T : BaseLifecycleViewModel> : BaseLifecycleFragment<
 
     override var versionName = BuildConfig.VERSION_NAME
 
-    override fun getVersionsLayoutId() = R.id.versionsContainer
+    override fun getVersionsLayoutId() = NO_TOOLBAR
 
-    override fun getEndPointTextViewId() = R.id.tvEndpoint
+    override fun getEndPointTextViewId() = NO_TOOLBAR
 
-    override fun getVersionsTextViewId() = R.id.tvVersion
+    override fun getVersionsTextViewId() = NO_TOOLBAR
 
     override fun isDebug() = BuildConfig.DEBUG
 

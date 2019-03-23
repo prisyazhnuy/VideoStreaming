@@ -3,6 +3,7 @@ package com.prisyazhnuy.streaming.ui.screens.wowza.broadcast
 import android.Manifest
 import android.os.Bundle
 import android.view.View
+import com.cleveroad.bootstrap.kotlin_core.utils.misc.MiscellaneousUtils
 import com.cleveroad.bootstrap.kotlin_ext.setClickListeners
 import com.cleveroad.bootstrap.kotlin_ext.withNotNull
 import com.prisyazhnuy.streaming.BuildConfig
@@ -17,6 +18,7 @@ import com.wowza.gocoder.sdk.api.broadcast.WOWZBroadcast
 import com.wowza.gocoder.sdk.api.broadcast.WOWZBroadcastConfig
 import com.wowza.gocoder.sdk.api.configuration.WOWZMediaConfig
 import com.wowza.gocoder.sdk.api.devices.WOWZAudioDevice
+import com.wowza.gocoder.sdk.api.devices.WOWZCamera
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.fragment_wowza_broadcast.*
 
@@ -28,8 +30,12 @@ class BroadcastFragment : BaseFragment<BroadcastVM>(),
     override val containerId = R.id.container
 
     companion object {
-        fun newInstance() = BroadcastFragment().apply {
-            arguments = Bundle()
+        private val NAME = MiscellaneousUtils.getExtra("NAME", BroadcastFragment::class.java)
+
+        fun newInstance(streamName: String) = BroadcastFragment().apply {
+            arguments = Bundle().apply {
+                putString(NAME, streamName)
+            }
         }
     }
 
@@ -42,12 +48,16 @@ class BroadcastFragment : BaseFragment<BroadcastVM>(),
 
     // Create a configuration instance for the broadcaster
     private val goCoderBroadcastConfig by lazy {
-        WOWZBroadcastConfig(WOWZMediaConfig.FRAME_SIZE_1920x1080).apply {
+        WOWZBroadcastConfig(WOWZMediaConfig.FRAME_SIZE_640x480).apply {
             // Set the connection properties for the target Wowza Streaming Engine server or Wowza Streaming Cloud live stream
             hostAddress = BuildConfig.WOWZA_HOST_ADDRESS
             portNumber = BuildConfig.WOWZA_PORT
             applicationName = BuildConfig.WOWZA_APP_NAME
-            streamName = BuildConfig.WOWZA_STREAM_NAME
+            streamName = arguments?.getString(NAME).orEmpty()
+//            username = "wowzaStream"
+//            password = "314159265"
+            username = "client40770"
+            password = "fd80c179"
 
 // Designate the camera preview as the video source
             videoBroadcaster = cameraPreview
@@ -98,16 +108,17 @@ class BroadcastFragment : BaseFragment<BroadcastVM>(),
         // Initialize the GoCoder SDK
         val sdk = WowzaGoCoder.init(context, BuildConfig.WOWZA_API_KEY)
 
-//        if (goCoder == null) {
         // If initialization failed, retrieve the last error and display it
-        val goCoderInitError = WowzaGoCoder.getLastError()
-        LOG.e(message = "GoCoder SDK error: ${goCoderInitError.errorDescription}")
-//        }
+        WowzaGoCoder.getLastError()?.let {
+            LOG.e(message = "GoCoder SDK error: ${it.errorDescription}")
+        }
     }
 
     private fun showPreview() {
         withNotNull(cameraPreview) {
-            if (isPreviewPaused) onResume() else startPreview()
+            if (isPreviewPaused) onResume() else startPreview(WOWZMediaConfig().apply {
+                setCamera(WOWZCamera.DIRECTION_FRONT)
+            })
         }
     }
 

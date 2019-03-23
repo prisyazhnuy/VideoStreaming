@@ -8,7 +8,7 @@ import com.prisyazhnuy.streaming.R
 
 abstract class BaseActivity<T : BaseLifecycleViewModel> : BaseLifecycleActivity<T>(), BlockedCallback {
 
-    override fun getProgressBarId() = R.id.progressView
+    override fun getProgressBarId() = -1
 
     override fun getSnackBarDuration() = Snackbar.LENGTH_SHORT
 
