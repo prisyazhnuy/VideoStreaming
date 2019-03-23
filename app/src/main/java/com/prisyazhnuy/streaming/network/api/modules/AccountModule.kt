@@ -11,7 +11,7 @@ import com.prisyazhnuy.streaming.network.api.requests.LoginRequest
 import com.prisyazhnuy.streaming.network.api.requests.RefreshTokenRequest
 import com.prisyazhnuy.streaming.network.api.requests.RegisterRequest
 import com.prisyazhnuy.streaming.preferences.PreferencesProvider
-import com.prisyazhnuy.streaming.NPApp
+import com.prisyazhnuy.streaming.VSApp
 import io.reactivex.Single
 
 interface AccountModule {
@@ -44,7 +44,7 @@ class AccountModuleImpl(api: AccountApi) :
                     .map {
                         it.apply {
                             session?.let { bean ->
-                                NPApp.instance.run{
+                                VSApp.instance.run{
                                     setSession(sessionBeanConverter.convertInToOut(bean))
                                     saveSession()
                                 }

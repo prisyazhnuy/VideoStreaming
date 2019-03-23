@@ -7,8 +7,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
 import com.prisyazhnuy.streaming.R
 import com.prisyazhnuy.streaming.preferences.PreferencesProvider
-import com.prisyazhnuy.streaming.NPApp
-import com.prisyazhnuy.streaming.ui.screens.splash.SplashActivity
+import com.prisyazhnuy.streaming.VSApp
+import com.prisyazhnuy.streaming.ui.screens.main.MainActivity
 import com.prisyazhnuy.streaming.utils.NOTHING
 import org.junit.Before
 import org.junit.Rule
@@ -23,14 +23,14 @@ class SplashActivityTest {
     @Before
     fun clearData() {
         PreferencesProvider.clearData()
-        NPApp.instance.getSession().run {
+        VSApp.instance.getSession().run {
             accessToken = NOTHING
             refreshToken = NOTHING
         }
     }
 
     @get:Rule
-    var activityRule = ActivityTestRule(SplashActivity::class.java)
+    var activityRule = ActivityTestRule(MainActivity::class.java)
 
     @Test
     fun splashActivityTest() {

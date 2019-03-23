@@ -3,7 +3,7 @@ package com.prisyazhnuy.streaming.network_module_test
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.cleveroad.bootstrap.kotlin_core.utils.ioToMainSingle
-import com.prisyazhnuy.streaming.NPApp
+import com.prisyazhnuy.streaming.VSApp
 import com.prisyazhnuy.streaming.extensions.blockingObserve
 import com.prisyazhnuy.streaming.models.User
 import com.prisyazhnuy.streaming.preferences.PreferencesProvider
@@ -37,8 +37,8 @@ class ServerClientSuccessTest {
 
     private lateinit var mockServer: MockWebServer
 
-    private val signUpVM by lazy { SignUpVM(NPApp.instance) }
-    private val signInVM by lazy { SignInVM(NPApp.instance) }
+    private val signUpVM by lazy { SignUpVM(VSApp.instance) }
+    private val signInVM by lazy { SignInVM(VSApp.instance) }
     private val testUserObserver = TestObserver<User>()
     private val testUnitObserver = TestObserver<Unit>()
 
@@ -50,7 +50,7 @@ class ServerClientSuccessTest {
     @Test
     fun testRegisterUserVMSuccess() {
         PreferencesProvider.clearData()
-        NPApp.instance.getSession().run {
+        VSApp.instance.getSession().run {
             accessToken = NOTHING
             refreshToken = NOTHING
         }
@@ -70,7 +70,7 @@ class ServerClientSuccessTest {
             assertEquals(EMPTY_STRING, refreshToken)
         }
 
-        NPApp.instance.getSession().run {
+        VSApp.instance.getSession().run {
             assertNull(accessToken)
             assertNull(refreshToken)
         }
@@ -100,7 +100,7 @@ class ServerClientSuccessTest {
             assertEquals(EMPTY_STRING, refreshToken)
         }
 
-        NPApp.instance.getSession().run {
+        VSApp.instance.getSession().run {
             assertNotNull(accessToken)
             assertNotNull(refreshToken)
         }
@@ -124,7 +124,7 @@ class ServerClientSuccessTest {
             assertEquals(EMPTY_STRING, refreshToken)
         }
 
-        NPApp.instance.getSession().run {
+        VSApp.instance.getSession().run {
             assertNotNull(accessToken)
             assertNotNull(refreshToken)
         }

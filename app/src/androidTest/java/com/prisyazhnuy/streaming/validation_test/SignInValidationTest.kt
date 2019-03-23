@@ -2,7 +2,7 @@ package com.prisyazhnuy.streaming.validation_test
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.prisyazhnuy.streaming.NPApp
+import com.prisyazhnuy.streaming.VSApp
 import com.prisyazhnuy.streaming.ui.screens.auth.sign_in.SignInVM
 import junit.framework.TestCase.assertEquals
 import org.junit.Rule
@@ -14,7 +14,7 @@ class SignInValidationTest {
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    private val signInVM by lazy { SignInVM(NPApp.instance) }
+    private val signInVM by lazy { SignInVM(VSApp.instance) }
 
     @Test
     fun testCorrectEmail() {

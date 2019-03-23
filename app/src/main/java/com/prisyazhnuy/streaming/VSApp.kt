@@ -11,11 +11,10 @@ import com.prisyazhnuy.streaming.preferences.PreferencesProvider
 import com.securepreferences.SecurePreferences
 
 
-// TODO rename application class
-class NPApp : Application() {
+class VSApp : Application() {
 
     companion object {
-        lateinit var instance: NPApp
+        lateinit var instance: VSApp
             private set
         lateinit var securePrefs: SecurePreferences
     }

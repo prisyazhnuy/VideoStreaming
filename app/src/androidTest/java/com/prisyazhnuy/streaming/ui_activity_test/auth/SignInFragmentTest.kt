@@ -16,7 +16,7 @@ import com.prisyazhnuy.streaming.extensions.getStringApp
 import com.prisyazhnuy.streaming.extensions.getStringArray
 import com.prisyazhnuy.streaming.network_module_test.*
 import com.prisyazhnuy.streaming.preferences.PreferencesProvider
-import com.prisyazhnuy.streaming.NPApp
+import com.prisyazhnuy.streaming.VSApp
 import com.prisyazhnuy.streaming.ui.screens.auth.AuthActivity
 import com.prisyazhnuy.streaming.ui_activity_test.invalidMaxLengthPasswords
 import com.prisyazhnuy.streaming.ui_activity_test.invalidMinLengthPasswords
@@ -51,7 +51,7 @@ class SignInFragmentTest {
     @Before
     fun clearData() {
         PreferencesProvider.clearData()
-        NPApp.instance.getSession().run {
+        VSApp.instance.getSession().run {
             accessToken = NOTHING
             refreshToken = NOTHING
         }

@@ -1,11 +1,11 @@
 package com.prisyazhnuy.streaming.preferences
 
-import com.prisyazhnuy.streaming.NPApp
+import com.prisyazhnuy.streaming.VSApp
 import com.prisyazhnuy.streaming.utils.EMPTY_STRING
 
 internal object PreferencesProvider {
 
-    private val preferences = NPApp.securePrefs
+    private val preferences = VSApp.securePrefs
 
     var token: String
         get() = preferences.getString(PreferencesContract.TOKEN, EMPTY_STRING)

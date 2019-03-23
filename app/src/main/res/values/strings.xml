@@ -13,4 +13,9 @@
     <string name="password">Password</string>
     <string name="confirm_password">Confirm password</string>
     <string name="broadcast">Broadcast</string>
+    <string name="stream">Stream</string>
+    <string name="playback">Playback</string>
+    <string name="wowza">Wowza</string>
+    <string name="stop">Stop</string>
+    <string name="play">Play</string>
 </resources>

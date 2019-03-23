@@ -1,10 +1,10 @@
 package com.prisyazhnuy.streaming.extensions
 
-import com.prisyazhnuy.streaming.NPApp
+import com.prisyazhnuy.streaming.VSApp
 import okhttp3.mockwebserver.MockResponse
 
 fun getJson(path: String) =
-        String(NPApp.instance.assets.open(path).readBytes())
+        String(VSApp.instance.assets.open(path).readBytes())
 
 fun getMockResponse(responseCode: Int, bodyPath: String): MockResponse =
         MockResponse()

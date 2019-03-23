@@ -3,7 +3,7 @@ package com.prisyazhnuy.streaming.network_module_test
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.cleveroad.bootstrap.kotlin_core.utils.ioToMainSingle
-import com.prisyazhnuy.streaming.NPApp
+import com.prisyazhnuy.streaming.VSApp
 import com.prisyazhnuy.streaming.extensions.blockingObserve
 import com.prisyazhnuy.streaming.models.User
 import com.prisyazhnuy.streaming.preferences.PreferencesProvider
@@ -37,8 +37,8 @@ class ServerClientErrorTest {
 
     private lateinit var mockServer: MockWebServer
 
-    private val signUpVM by lazy { SignUpVM(NPApp.instance) }
-    private val signInVM by lazy { SignInVM(NPApp.instance) }
+    private val signUpVM by lazy { SignUpVM(VSApp.instance) }
+    private val signInVM by lazy { SignInVM(VSApp.instance) }
     private val testUserObserver = TestObserver<User>()
     private val testUnitObserver = TestObserver<Unit>()
 
@@ -63,7 +63,7 @@ class ServerClientErrorTest {
         assertEquals(EMPTY_STRING, PreferencesProvider.token)
         assertEquals(EMPTY_STRING, PreferencesProvider.refreshToken)
 
-        NPApp.instance.getSession().run {
+        VSApp.instance.getSession().run {
             assertNull(accessToken)
             assertNull(refreshToken)
         }
@@ -90,7 +90,7 @@ class ServerClientErrorTest {
         assertEquals(EMPTY_STRING, PreferencesProvider.token)
         assertEquals(EMPTY_STRING, PreferencesProvider.refreshToken)
 
-        NPApp.instance.getSession().run {
+        VSApp.instance.getSession().run {
             assertNull(accessToken)
             assertNull(refreshToken)
         }
@@ -113,7 +113,7 @@ class ServerClientErrorTest {
         assertEquals(EMPTY_STRING, PreferencesProvider.token)
         assertEquals(EMPTY_STRING, PreferencesProvider.refreshToken)
 
-        NPApp.instance.getSession().run {
+        VSApp.instance.getSession().run {
             assertNull(accessToken)
             assertNull(refreshToken)
         }

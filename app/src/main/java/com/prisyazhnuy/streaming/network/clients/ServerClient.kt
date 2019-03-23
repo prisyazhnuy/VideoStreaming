@@ -6,7 +6,7 @@ import com.ihsanbal.logging.Level
 import com.ihsanbal.logging.LoggingInterceptor
 import com.itkacher.okhttpprofiler.OkHttpProfilerInterceptor
 import com.prisyazhnuy.streaming.BuildConfig
-import com.prisyazhnuy.streaming.NPApp
+import com.prisyazhnuy.streaming.VSApp
 import com.prisyazhnuy.streaming.models.Session
 import com.prisyazhnuy.streaming.network.LOCALHOST
 import com.prisyazhnuy.streaming.network.NetworkModule.mapper
@@ -86,7 +86,7 @@ class ServerClient {
                             .compose(unauthorizedHandler())
                             .compose(ioToMainSingle())
                             .blockingGet()
-                    with(NPApp.instance) {
+                    with(VSApp.instance) {
                         setSession(session)
                         saveSession()
                     }
@@ -112,14 +112,14 @@ class ServerClient {
         requestBuilder.removeHeader(HEADER_AUTHORIZATION)
         if (PreferencesProvider.token.isNotEmpty()) {
             requestBuilder.addHeader(HEADER_AUTHORIZATION, "$AUTHORIZATION_PREF ${PreferencesProvider.token}")
-        } else if (!NPApp.instance.getSession().accessToken.isNullOrEmpty()) {
-            requestBuilder.addHeader(HEADER_AUTHORIZATION, NPApp.instance.getSession().accessToken as String)
+        } else if (!VSApp.instance.getSession().accessToken.isNullOrEmpty()) {
+            requestBuilder.addHeader(HEADER_AUTHORIZATION, VSApp.instance.getSession().accessToken as String)
         }
         return requestBuilder.build()
     }
 
     private fun <T> doLogoutSingle(): Single<T> {
-        NPApp.instance.onLogout()
+        VSApp.instance.onLogout()
         return Single.error<T>(IllegalAccessException("Wrong credentials"))
     }
 
