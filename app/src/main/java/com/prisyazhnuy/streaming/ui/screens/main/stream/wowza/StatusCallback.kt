@@ -1,4 +1,4 @@
-package com.prisyazhnuy.streaming.ui.screens.wowza
+package com.prisyazhnuy.streaming.ui.screens.main.stream.wowza
 
 import androidx.lifecycle.MutableLiveData
 import com.wowza.gocoder.sdk.api.status.WOWZState

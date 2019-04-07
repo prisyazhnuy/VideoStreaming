@@ -6,7 +6,8 @@ import android.view.View
 import com.cleveroad.bootstrap.kotlin_ext.setClickListeners
 import com.prisyazhnuy.streaming.R
 import com.prisyazhnuy.streaming.ui.base.BaseActivity
-import com.prisyazhnuy.streaming.ui.screens.wowza.WowzaFragment
+import com.prisyazhnuy.streaming.ui.screens.main.stream.StreamFragment
+import com.prisyazhnuy.streaming.ui.screens.main.stream.StreamService
 import kotlinx.android.synthetic.main.activity_splash.*
 
 class MainActivity : BaseActivity<MainVM>(),
@@ -29,7 +30,7 @@ class MainActivity : BaseActivity<MainVM>(),
 
     override fun onStart() {
         super.onStart()
-        setClickListeners(btnWowza)
+        setClickListeners(btnWowza, btnRed5Pro)
     }
 
     override fun observeLiveData(viewModel: MainVM) = Unit
@@ -37,10 +38,15 @@ class MainActivity : BaseActivity<MainVM>(),
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btnWowza -> openWowzaStream()
+            R.id.btnRed5Pro -> openRed5ProStream()
         }
     }
 
     private fun openWowzaStream() {
-        replaceFragment(WowzaFragment.newInstance())
+        replaceFragment(StreamFragment.newInstance(StreamService.WOWZA))
+    }
+
+    private fun openRed5ProStream() {
+        replaceFragment(StreamFragment.newInstance(StreamService.RED5PRO))
     }
 }

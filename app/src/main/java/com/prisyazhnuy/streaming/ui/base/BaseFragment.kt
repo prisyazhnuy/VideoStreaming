@@ -3,10 +3,14 @@ package com.prisyazhnuy.streaming.ui.base
 import androidx.fragment.app.Fragment
 import com.cleveroad.bootstrap.kotlin_core.ui.BaseLifecycleFragment
 import com.cleveroad.bootstrap.kotlin_core.ui.BaseLifecycleViewModel
+import com.cleveroad.bootstrap.kotlin_ext.withNotNull
 import com.prisyazhnuy.streaming.BuildConfig
-import com.prisyazhnuy.streaming.R
 
 abstract class BaseFragment<T : BaseLifecycleViewModel> : BaseLifecycleFragment<T>() {
+
+    companion object {
+        const val NO_ID = -1
+    }
 
     abstract val containerId: Int
 
@@ -28,7 +32,7 @@ abstract class BaseFragment<T : BaseLifecycleViewModel> : BaseLifecycleFragment<
 
     fun replaceFragment(fragment: Fragment, needToAddToBackStack: Boolean = true) {
         val name = fragment.javaClass.simpleName
-        with(childFragmentManager.beginTransaction()) {
+        withNotNull(childFragmentManager.beginTransaction().takeUnless { containerId == NO_ID }) {
             replace(containerId, fragment, name)
             if (needToAddToBackStack) {
                 addToBackStack(name)

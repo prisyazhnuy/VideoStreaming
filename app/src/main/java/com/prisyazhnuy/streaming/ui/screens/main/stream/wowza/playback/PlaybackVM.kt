@@ -1,4 +1,4 @@
-package com.prisyazhnuy.streaming.ui.screens.wowza.playback
+package com.prisyazhnuy.streaming.ui.screens.main.stream.wowza.playback
 
 import android.app.Application
 import com.prisyazhnuy.streaming.ui.base.BaseViewModel

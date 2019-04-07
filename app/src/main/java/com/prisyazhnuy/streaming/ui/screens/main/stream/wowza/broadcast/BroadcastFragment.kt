@@ -1,4 +1,4 @@
-package com.prisyazhnuy.streaming.ui.screens.wowza.broadcast
+package com.prisyazhnuy.streaming.ui.screens.main.stream.wowza.broadcast
 
 import android.Manifest
 import android.os.Bundle
@@ -10,7 +10,7 @@ import com.prisyazhnuy.streaming.BuildConfig
 import com.prisyazhnuy.streaming.R
 import com.prisyazhnuy.streaming.extensions.safeSingleObserve
 import com.prisyazhnuy.streaming.ui.base.BaseFragment
-import com.prisyazhnuy.streaming.ui.screens.wowza.StatusCallback
+import com.prisyazhnuy.streaming.ui.screens.main.stream.wowza.StatusCallback
 import com.prisyazhnuy.streaming.utils.LOG
 import com.tbruyelle.rxpermissions2.RxPermissions
 import com.wowza.gocoder.sdk.api.WowzaGoCoder

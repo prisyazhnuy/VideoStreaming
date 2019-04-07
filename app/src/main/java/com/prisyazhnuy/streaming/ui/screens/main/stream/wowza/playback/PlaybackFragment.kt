@@ -1,4 +1,4 @@
-package com.prisyazhnuy.streaming.ui.screens.wowza.playback
+package com.prisyazhnuy.streaming.ui.screens.main.stream.wowza.playback
 
 import android.os.Bundle
 import android.view.View
@@ -8,7 +8,7 @@ import com.prisyazhnuy.streaming.BuildConfig
 import com.prisyazhnuy.streaming.R
 import com.prisyazhnuy.streaming.extensions.safeSingleObserve
 import com.prisyazhnuy.streaming.ui.base.BaseFragment
-import com.prisyazhnuy.streaming.ui.screens.wowza.StatusCallback
+import com.prisyazhnuy.streaming.ui.screens.main.stream.wowza.StatusCallback
 import com.prisyazhnuy.streaming.utils.LOG
 import com.wowza.gocoder.sdk.api.WowzaGoCoder
 import com.wowza.gocoder.sdk.api.player.WOWZPlayerConfig
