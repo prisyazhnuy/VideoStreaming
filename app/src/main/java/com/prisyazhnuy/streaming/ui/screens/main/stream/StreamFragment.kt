@@ -53,6 +53,7 @@ class StreamFragment : BaseFragment<StreamVM>(),
         replaceFragment(when(service) {
             StreamService.WOWZA -> com.prisyazhnuy.streaming.ui.screens.main.stream.wowza.broadcast.BroadcastFragment.newInstance(etStreamName.text())
             StreamService.RED5PRO -> com.prisyazhnuy.streaming.ui.screens.main.stream.red5pro.broadcast.BroadcastFragment.newInstance(etStreamName.text())
+            StreamService.TWILIO -> com.prisyazhnuy.streaming.ui.screens.main.stream.twilio.playback.PlaybackFragment.newInstance(etStreamName.text())
             else -> com.prisyazhnuy.streaming.ui.screens.main.stream.wowza.broadcast.BroadcastFragment.newInstance(etStreamName.text())
         })
     }
@@ -61,6 +62,7 @@ class StreamFragment : BaseFragment<StreamVM>(),
         replaceFragment(when(service) {
             StreamService.WOWZA -> com.prisyazhnuy.streaming.ui.screens.main.stream.wowza.playback.PlaybackFragment.newInstance(etStreamName.text())
             StreamService.RED5PRO -> com.prisyazhnuy.streaming.ui.screens.main.stream.red5pro.playback.PlaybackFragment.newInstance(etStreamName.text())
+            StreamService.TWILIO -> com.prisyazhnuy.streaming.ui.screens.main.stream.twilio.playback.PlaybackFragment.newInstance(etStreamName.text())
             else -> com.prisyazhnuy.streaming.ui.screens.main.stream.wowza.playback.PlaybackFragment.newInstance(etStreamName.text())
         })
     }

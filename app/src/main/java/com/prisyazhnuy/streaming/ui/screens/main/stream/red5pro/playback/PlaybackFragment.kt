@@ -33,11 +33,11 @@ class PlaybackFragment : BaseFragment<PlaybackVM>(),
 
     private val config by lazy {
         R5Configuration(R5StreamProtocol.RTSP,
-                "localhost",
-                8554,
+                "192.168.42.56",
+                5080,
                 "live",
                 1.0f).apply {
-            licenseKey = ""
+            licenseKey = "MOJ4-ORCR-S4WC-KKVF"
             bundleID = VSApp.instance.packageName
         }
     }

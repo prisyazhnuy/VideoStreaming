@@ -30,7 +30,7 @@ class MainActivity : BaseActivity<MainVM>(),
 
     override fun onStart() {
         super.onStart()
-        setClickListeners(btnWowza, btnRed5Pro)
+        setClickListeners(btnWowza, btnRed5Pro, btnTwilio)
     }
 
     override fun observeLiveData(viewModel: MainVM) = Unit
@@ -39,6 +39,7 @@ class MainActivity : BaseActivity<MainVM>(),
         when (v?.id) {
             R.id.btnWowza -> openWowzaStream()
             R.id.btnRed5Pro -> openRed5ProStream()
+            R.id.btnTwilio -> openTwilioStream()
         }
     }
 
@@ -48,5 +49,9 @@ class MainActivity : BaseActivity<MainVM>(),
 
     private fun openRed5ProStream() {
         replaceFragment(StreamFragment.newInstance(StreamService.RED5PRO))
+    }
+
+    private fun openTwilioStream() {
+        replaceFragment(StreamFragment.newInstance(StreamService.TWILIO))
     }
 }

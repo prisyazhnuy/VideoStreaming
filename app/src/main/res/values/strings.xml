@@ -19,4 +19,5 @@
     <string name="play">Play</string>
     <string name="stream_name">Stream name</string>
     <string name="red5pro">Red5Pro</string>
+    <string name="twilio">Twilio</string>
 </resources>

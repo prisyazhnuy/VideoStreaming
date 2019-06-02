@@ -41,11 +41,11 @@ class BroadcastFragment : BaseFragment<BroadcastVM>(),
 
     private val config by lazy {
         R5Configuration(R5StreamProtocol.RTSP,
-                "localhost",
-                8554,
+                "192.168.42.56",
+                5080,
                 "live",
                 1.0f).apply {
-            licenseKey = ""
+            licenseKey = "MOJ4-ORCR-S4WC-KKVF"
             bundleID = VSApp.instance.packageName
         }
     }
@@ -104,7 +104,7 @@ class BroadcastFragment : BaseFragment<BroadcastVM>(),
             startBroadcast()
         }
         isBroadcasting = isBroadcasting.not()
-        btnBroadcast.setText(if (isBroadcasting) R.string.broadcast else R.string.stop)
+        btnBroadcast.setText(if (isBroadcasting) R.string.stop else R.string.broadcast)
     }
 
     private fun startBroadcast() {

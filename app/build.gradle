@@ -29,6 +29,11 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
 //    println("Debug Build number $buildNoDevelop")
 //    println("Prod Build number $buildNoProd")
 //    println("Build Git Hash $buildGitHash")
@@ -57,6 +62,7 @@ android {
 //            buildConfigField "String", "WOWZA_STREAM_NAME", '"myStream"'
             buildConfigField "String", "WOWZA_STREAM_NAME", '"d5fb0d67"'
             buildConfigField "String", "WOWZA_API_KEY", '"GOSK-3A46-010C-044E-2484-8EEF"'
+            buildConfigField "String", "TWILIO_ACCESS_TOKEN", '"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJqdGkiOiJTSzExOTRiYWRlN2FlYjE2ZTdlZGRmMzM1ODI1YTRlMGNjLTE1NTkzMjMwMjgiLCJpc3MiOiJTSzExOTRiYWRlN2FlYjE2ZTdlZGRmMzM1ODI1YTRlMGNjIiwic3ViIjoiQUMzMjc5MjhhNjJmNGU2YzM1MTJmNGNiYjQwNmRlNDllOSIsImV4cCI6MTU1OTMyNjYyOCwiZ3JhbnRzIjp7ImlkZW50aXR5IjoiZmlyc3QiLCJ2aWRlbyI6e319fQ.QhQDT57m7wJo3HTHsW8oDEZ-6eKz8N077Kd8Tj_gxZ8"'
         }
         // TODO change ENDPOINT
         debug {
@@ -167,4 +173,7 @@ dependencies {
 
     // The GoCoder SDK library dependency declaration
     implementation 'com.wowza.gocoder.sdk.android:com.wowza.gocoder.sdk:1.5b7@aar'
+
+    //Twilio
+    implementation 'com.twilio:video-android:3.2.2'
 }
