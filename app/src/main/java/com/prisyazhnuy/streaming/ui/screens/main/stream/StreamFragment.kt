@@ -1,5 +1,6 @@
 package com.prisyazhnuy.streaming.ui.screens.main.stream
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import com.cleveroad.bootstrap.kotlin_core.utils.misc.MiscellaneousUtils
@@ -7,7 +8,8 @@ import com.cleveroad.bootstrap.kotlin_ext.setClickListeners
 import com.prisyazhnuy.streaming.R
 import com.prisyazhnuy.streaming.extensions.text
 import com.prisyazhnuy.streaming.ui.base.BaseFragment
-import com.prisyazhnuy.streaming.ui.screens.main.stream.wowza.broadcast.BroadcastFragment
+import com.prisyazhnuy.streaming.ui.screens.main.stream.jitsi.JitsiFragment
+import com.prisyazhnuy.streaming.utils.bindInterfaceOrThrow
 import kotlinx.android.synthetic.main.fragment_stream.*
 
 class StreamFragment : BaseFragment<StreamVM>(),
@@ -28,12 +30,16 @@ class StreamFragment : BaseFragment<StreamVM>(),
     override val containerId = R.id.container
 
     private val service by lazy { arguments?.getSerializable(SERVICE) as? StreamService }
+    private var callback: StreamCallback? = null
 
     override fun getScreenTitle() = NO_TITLE
-
     override fun getToolbarId() = NO_TOOLBAR
-
     override fun hasToolbar() = false
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        callback = bindInterfaceOrThrow(context)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -49,20 +55,27 @@ class StreamFragment : BaseFragment<StreamVM>(),
         }
     }
 
+    override fun onDetach() {
+        callback = null
+        super.onDetach()
+    }
+
     private fun openBroadcast() {
-        replaceFragment(when(service) {
+        callback?.openFragment(when (service) {
             StreamService.WOWZA -> com.prisyazhnuy.streaming.ui.screens.main.stream.wowza.broadcast.BroadcastFragment.newInstance(etStreamName.text())
             StreamService.RED5PRO -> com.prisyazhnuy.streaming.ui.screens.main.stream.red5pro.broadcast.BroadcastFragment.newInstance(etStreamName.text())
             StreamService.TWILIO -> com.prisyazhnuy.streaming.ui.screens.main.stream.twilio.playback.PlaybackFragment.newInstance(etStreamName.text())
+            StreamService.JITSI -> JitsiFragment.newInstance(etStreamName.text())
             else -> com.prisyazhnuy.streaming.ui.screens.main.stream.wowza.broadcast.BroadcastFragment.newInstance(etStreamName.text())
         })
     }
 
     private fun openPlayback() {
-        replaceFragment(when(service) {
+        callback?.openFragment(when (service) {
             StreamService.WOWZA -> com.prisyazhnuy.streaming.ui.screens.main.stream.wowza.playback.PlaybackFragment.newInstance(etStreamName.text())
             StreamService.RED5PRO -> com.prisyazhnuy.streaming.ui.screens.main.stream.red5pro.playback.PlaybackFragment.newInstance(etStreamName.text())
             StreamService.TWILIO -> com.prisyazhnuy.streaming.ui.screens.main.stream.twilio.playback.PlaybackFragment.newInstance(etStreamName.text())
+            StreamService.JITSI -> JitsiFragment.newInstance(etStreamName.text())
             else -> com.prisyazhnuy.streaming.ui.screens.main.stream.wowza.playback.PlaybackFragment.newInstance(etStreamName.text())
         })
     }

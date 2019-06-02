@@ -2,16 +2,16 @@ package com.prisyazhnuy.streaming.ui.screens.main
 
 import android.content.Context
 import android.content.Intent
-import android.view.View
-import com.cleveroad.bootstrap.kotlin_ext.setClickListeners
+import androidx.fragment.app.Fragment
 import com.prisyazhnuy.streaming.R
 import com.prisyazhnuy.streaming.ui.base.BaseActivity
+import com.prisyazhnuy.streaming.ui.screens.main.stream.StreamCallback
 import com.prisyazhnuy.streaming.ui.screens.main.stream.StreamFragment
 import com.prisyazhnuy.streaming.ui.screens.main.stream.StreamService
-import kotlinx.android.synthetic.main.activity_splash.*
 
 class MainActivity : BaseActivity<MainVM>(),
-        View.OnClickListener {
+        StreamCallback,
+        MainCallback {
 
     override val viewModelClass = MainVM::class.java
     override val containerId = R.id.container
@@ -30,28 +30,28 @@ class MainActivity : BaseActivity<MainVM>(),
 
     override fun onStart() {
         super.onStart()
-        setClickListeners(btnWowza, btnRed5Pro, btnTwilio)
+        replaceFragment(MainFragment.newInstance(), false)
     }
 
     override fun observeLiveData(viewModel: MainVM) = Unit
 
-    override fun onClick(v: View?) {
-        when (v?.id) {
-            R.id.btnWowza -> openWowzaStream()
-            R.id.btnRed5Pro -> openRed5ProStream()
-            R.id.btnTwilio -> openTwilioStream()
-        }
+    override fun openFragment(fragment: Fragment) {
+        replaceFragment(fragment)
     }
 
-    private fun openWowzaStream() {
+    override fun openWowzaStream() {
         replaceFragment(StreamFragment.newInstance(StreamService.WOWZA))
     }
 
-    private fun openRed5ProStream() {
+    override fun openRed5ProStream() {
         replaceFragment(StreamFragment.newInstance(StreamService.RED5PRO))
     }
 
-    private fun openTwilioStream() {
+    override fun openTwilioStream() {
         replaceFragment(StreamFragment.newInstance(StreamService.TWILIO))
+    }
+
+    override fun openJitsiStream() {
+        replaceFragment(StreamFragment.newInstance(StreamService.JITSI))
     }
 }

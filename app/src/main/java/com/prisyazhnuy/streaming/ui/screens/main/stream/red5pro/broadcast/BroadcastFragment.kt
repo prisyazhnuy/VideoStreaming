@@ -9,12 +9,15 @@ import com.cleveroad.bootstrap.kotlin_ext.setClickListeners
 import com.prisyazhnuy.streaming.R
 import com.prisyazhnuy.streaming.VSApp
 import com.prisyazhnuy.streaming.ui.base.BaseFragment
+import com.prisyazhnuy.streaming.utils.LOG
 import com.prisyazhnuy.streaming.utils.SimpleSurfaceCallback
 import com.red5pro.streaming.R5Connection
 import com.red5pro.streaming.R5Stream
 import com.red5pro.streaming.R5Stream.RecordType
 import com.red5pro.streaming.R5StreamProtocol
 import com.red5pro.streaming.config.R5Configuration
+import com.red5pro.streaming.event.R5ConnectionEvent
+import com.red5pro.streaming.event.R5ConnectionListener
 import com.red5pro.streaming.source.R5Camera
 import com.red5pro.streaming.source.R5Microphone
 import kotlinx.android.synthetic.main.fragment_red5pro_broadcast.*
@@ -40,12 +43,12 @@ class BroadcastFragment : BaseFragment<BroadcastVM>(),
     private var isBroadcasting = false
 
     private val config by lazy {
-        R5Configuration(R5StreamProtocol.RTSP,
-                "192.168.42.56",
-                5080,
+        R5Configuration(R5StreamProtocol.SRTP,
+                "192.168.0.104",
+                8554,
                 "live",
-                1.0f).apply {
-            licenseKey = "MOJ4-ORCR-S4WC-KKVF"
+                3.0f).apply {
+            licenseKey = "XX5C-INYZ-HMMW-GNJS"
             bundleID = VSApp.instance.packageName
         }
     }
@@ -113,6 +116,8 @@ class BroadcastFragment : BaseFragment<BroadcastVM>(),
             setView(surfaceView)
             attachCamera(R5Camera(camera, surfaceView.width, surfaceView.height))
             attachMic(R5Microphone())
+            listener = R5ConnectionListener { p0 -> LOG.e(message = "connection = $p0") }
+            setLogLevel(R5Stream.LOG_LEVEL_DEBUG)
             publish(arguments?.getString(NAME).orEmpty(), RecordType.Live)
         }
         camera.startPreview()

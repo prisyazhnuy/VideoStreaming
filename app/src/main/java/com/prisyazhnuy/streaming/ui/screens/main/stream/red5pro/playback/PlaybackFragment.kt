@@ -32,12 +32,12 @@ class PlaybackFragment : BaseFragment<PlaybackVM>(),
     override val viewModelClass = PlaybackVM::class.java
 
     private val config by lazy {
-        R5Configuration(R5StreamProtocol.RTSP,
-                "192.168.42.56",
-                5080,
+        R5Configuration(R5StreamProtocol.SRTP,
+                "192.168.0.104",
+                8554,
                 "live",
-                1.0f).apply {
-            licenseKey = "MOJ4-ORCR-S4WC-KKVF"
+                3.0f).apply {
+            licenseKey = "XX5C-INYZ-HMMW-GNJS"
             bundleID = VSApp.instance.packageName
         }
     }

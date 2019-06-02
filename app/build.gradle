@@ -91,6 +91,7 @@ android {
         exclude 'META-INF/NOTICE' // It is not include NOTICE file
         exclude 'META-INF/LICENSE' // It is not include LICENSE file
         exclude 'META-INF/rxjava.properties' // It is not include LICENSE file
+        pickFirst '**/libjingle_peerconnection_so.so'
     }
     dexOptions {
         javaMaxHeapSize "4g"
@@ -105,17 +106,15 @@ android {
 
 dependencies {
     def testVersion = "1.1.0"
-
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation "androidx.test.ext:junit:1.1.0"
+    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation "androidx.test:runner:$testVersion"
     androidTestImplementation "androidx.test:rules:$testVersion"
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
-    androidTestImplementation "androidx.arch.core:core-testing:2.0.1"
-    implementation "com.squareup.okhttp3:mockwebserver:3.12.0"
+    androidTestImplementation 'androidx.arch.core:core-testing:2.0.1'
+    implementation 'com.squareup.okhttp3:mockwebserver:3.12.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
     // Support
     implementation supportDependencies.lifecycleExtension
     implementation supportDependencies.constraintlayout
@@ -124,16 +123,13 @@ dependencies {
     implementation supportDependencies.multiDex
     implementation supportDependencies.kotlin
     implementation supportDependencies.design
-
     // Bootstrap
     implementation bootstrapDependencies.validators
     implementation bootstrapDependencies.rxBus
     implementation bootstrapDependencies.core
     implementation bootstrapDependencies.ext
-
     // Stetho
     implementation "com.facebook.stetho:stetho:$stethoVersoin"
-
     // Room
     implementation roomDependencies.migration
     implementation roomDependencies.compiler
@@ -142,38 +138,40 @@ dependencies {
     implementation roomDependencies.testing
     implementation roomDependencies.common
     implementation roomDependencies.guava
-
     // RxJava
     implementation rxJavaDependencies.rxJava2
-
     // Retrofit
     implementation retrofitDependencies.converter
     implementation retrofitDependencies.retrofit
     implementation retrofitDependencies.adapter
-
     // Jackson
     implementation jacksonDependencies.interceptor
     implementation jacksonDependencies.annotations
     implementation jacksonDependencies.databind
     implementation jacksonDependencies.core
     implementation jacksonDependencies.joda
-
     // Secure preferences
     implementation securePreferencesDependencies.lib
-
     // LoggingInterceptor
     implementation('com.github.ihsanbal:LoggingInterceptor:2.0.7') {
         exclude group: 'org.json', module: 'json'
     }
-
     // OkHttpProfiler
-    implementation "com.itkacher.okhttpprofiler:okhttpprofiler:1.0.4"
-
+    implementation 'com.itkacher.okhttpprofiler:okhttpprofiler:1.0.4'
     implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
-
     // The GoCoder SDK library dependency declaration
     implementation 'com.wowza.gocoder.sdk.android:com.wowza.gocoder.sdk:1.5b7@aar'
-
     //Twilio
     implementation 'com.twilio:video-android:3.2.2'
+//     Jitsi Meet
+    implementation('org.jitsi.react:jitsi-meet-sdk:2.1.0') {
+        transitive = true
+    }
+    // Glide
+    implementation('com.github.bumptech.glide:glide:4.7.1') {
+        exclude group: "com.android.support", module: "glide"
+    }
+    implementation('com.github.bumptech.glide:annotations:4.7.1') {
+        exclude group: "com.android.support", module: "annotations"
+    }
 }
