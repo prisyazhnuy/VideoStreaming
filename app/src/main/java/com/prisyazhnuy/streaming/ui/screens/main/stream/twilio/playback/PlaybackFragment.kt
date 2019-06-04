@@ -2,21 +2,24 @@ package com.prisyazhnuy.streaming.ui.screens.main.stream.twilio.playback
 
 import android.os.Bundle
 import android.view.View
+import com.cleveroad.bootstrap.kotlin_core.ui.adapter.BaseListFragment
 import com.cleveroad.bootstrap.kotlin_core.utils.misc.MiscellaneousUtils
 import com.cleveroad.bootstrap.kotlin_ext.safeLet
 import com.cleveroad.bootstrap.kotlin_ext.setClickListeners
 import com.prisyazhnuy.streaming.BuildConfig
 import com.prisyazhnuy.streaming.R
 import com.prisyazhnuy.streaming.extensions.safeSingleObserve
-import com.prisyazhnuy.streaming.ui.base.BaseFragment
 import com.prisyazhnuy.streaming.ui.screens.main.stream.twilio.StatusCallback
+import com.prisyazhnuy.streaming.utils.EMPTY_STRING
 import com.prisyazhnuy.streaming.utils.LOG
 import com.twilio.video.*
 import kotlinx.android.synthetic.main.fragment_twilio_playback.*
 
 
-class PlaybackFragment : BaseFragment<PlaybackVM>(),
-        View.OnClickListener {
+class PlaybackFragment : BaseListFragment<PlaybackVM, RemoteParticipant>(),
+        View.OnClickListener,
+        ParticipantAdapterCallback {
+
 
     companion object {
         private val NAME = MiscellaneousUtils.getExtra("NAME", PlaybackFragment::class.java)
@@ -28,7 +31,6 @@ class PlaybackFragment : BaseFragment<PlaybackVM>(),
         }
     }
 
-    override val containerId = NO_ID
     override val layoutId = R.layout.fragment_twilio_playback
     override val viewModelClass = PlaybackVM::class.java
 
@@ -39,7 +41,7 @@ class PlaybackFragment : BaseFragment<PlaybackVM>(),
         object : StatusCallback() {
 
             override fun onConnected(room: Room?) {
-                room?.remoteParticipants?.forEach { it.setListener(participantListener())}
+                room?.remoteParticipants?.forEach { it.setListener(participantListener()) }
             }
 
             override fun onParticipantConnected(room: Room?, remoteParticipant: RemoteParticipant?) {
@@ -68,6 +70,31 @@ class PlaybackFragment : BaseFragment<PlaybackVM>(),
     override fun getToolbarId() = NO_TOOLBAR
 
     override fun hasToolbar() = false
+
+    override var endpoint = EMPTY_STRING
+    override val noResultViewId = NO_ID
+    override val recyclerViewId = R.id.recyclerView
+    override val refreshLayoutId = NO_ID
+    override var versionName = EMPTY_STRING
+
+    private val participantAdapter by lazy { context?.let { ctx -> ParticipantAdapter(ctx, this@PlaybackFragment) } }
+
+    override fun getAdapter() = participantAdapter
+
+    override fun getEndPointTextViewId() = NO_ID
+
+    override fun getVersionsLayoutId() = NO_ID
+
+    override fun getVersionsTextViewId() = NO_ID
+
+    override fun isDebug() = false
+
+    override fun loadInitial() {
+    }
+
+    override fun loadMoreData() = Unit
+
+    override fun showBlockBackAlert() = Unit
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -106,6 +133,10 @@ class PlaybackFragment : BaseFragment<PlaybackVM>(),
         }
     }
 
+    override fun onParticipantClicked(participant: RemoteParticipant) {
+        showSnackBar("onParticipantClicked")
+    }
+
     private fun stopPlayback() {
         room?.disconnect()
     }
@@ -128,11 +159,11 @@ Track by rendering it on screen: */
             }
 
             override fun onVideoTrackSubscribed(remoteParticipant: RemoteParticipant?, remoteVideoTrackPublication: RemoteVideoTrackPublication?, remoteVideoTrack: RemoteVideoTrack?) {
-                remoteVideoTrackPublication?.remoteVideoTrack?.addRenderer(primaryVideoView)
+                remoteParticipant?.let { onDataRangeLoaded(listOf(it)) }
             }
 
             override fun onVideoTrackEnabled(remoteParticipant: RemoteParticipant?, remoteVideoTrackPublication: RemoteVideoTrackPublication?) {
-                remoteVideoTrackPublication?.remoteVideoTrack?.addRenderer(primaryVideoView)
+//                remoteVideoTrackPublication?.remoteVideoTrack?.addRenderer(primaryVideoView)
             }
 
             override fun onVideoTrackDisabled(remoteParticipant: RemoteParticipant?, remoteVideoTrackPublication: RemoteVideoTrackPublication?) {
