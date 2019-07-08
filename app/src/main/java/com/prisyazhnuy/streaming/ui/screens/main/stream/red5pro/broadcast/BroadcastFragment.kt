@@ -42,17 +42,6 @@ class BroadcastFragment : BaseFragment<BroadcastVM>(),
 
     private var isBroadcasting = false
 
-    private val config by lazy {
-        R5Configuration(R5StreamProtocol.SRTP,
-                "192.168.0.104",
-                8554,
-                "live",
-                3.0f).apply {
-            licenseKey = "XX5C-INYZ-HMMW-GNJS"
-            bundleID = VSApp.instance.packageName
-        }
-    }
-
     private lateinit var camera: Camera
     private lateinit var stream: R5Stream
     private val surfaceCallback by lazy {
@@ -110,13 +99,24 @@ class BroadcastFragment : BaseFragment<BroadcastVM>(),
         btnBroadcast.setText(if (isBroadcasting) R.string.stop else R.string.broadcast)
     }
 
+    private val config by lazy {
+        R5Configuration(R5StreamProtocol.SRTP,
+                "192.168.0.104",
+                8554,
+                "live",
+                1.0f).apply {
+            licenseKey = "XX5C-INYZ-HMMW-GNJS"
+            bundleID = VSApp.instance.packageName
+        }
+    }
+
     private fun startBroadcast() {
         camera.stopPreview()
         stream = R5Stream(R5Connection(config)).apply {
             setView(surfaceView)
             attachCamera(R5Camera(camera, surfaceView.width, surfaceView.height))
             attachMic(R5Microphone())
-            listener = R5ConnectionListener { p0 -> LOG.e(message = "connection = $p0") }
+            listener = R5ConnectionListener { msg -> LOG.e(message = "connection = $msg") }
             setLogLevel(R5Stream.LOG_LEVEL_DEBUG)
             publish(arguments?.getString(NAME).orEmpty(), RecordType.Live)
         }

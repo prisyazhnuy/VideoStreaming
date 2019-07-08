@@ -10,6 +10,7 @@ import kotlinx.android.synthetic.main.fragment_jitsi.*
 import org.jitsi.meet.sdk.JitsiMeet
 import org.jitsi.meet.sdk.JitsiMeetActivity
 import org.jitsi.meet.sdk.JitsiMeetConferenceOptions
+import org.jitsi.meet.sdk.JitsiMeetUserInfo
 import java.net.URL
 
 
@@ -58,11 +59,10 @@ View.OnClickListener{
     private fun startStream() {
         val options = JitsiMeetConferenceOptions.Builder()
                 .setRoom(arguments?.getString(NAME))
+                .setUserInfo(JitsiMeetUserInfo())
                 .build()
         // Launch the new activity with the given options. The launch() method takes care
         // of creating the required Intent and passing the options.
-        context?.let { ctx ->
-            JitsiMeetActivity.launch(ctx, options)
-        }
+        context?.let { ctx -> JitsiMeetActivity.launch(ctx, options) }
     }
 }

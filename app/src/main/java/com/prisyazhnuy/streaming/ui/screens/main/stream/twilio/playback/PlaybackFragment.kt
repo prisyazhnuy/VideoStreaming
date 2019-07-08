@@ -37,7 +37,6 @@ class PlaybackFragment : BaseFragment<PlaybackVM>(),
     private val streamName by lazy { arguments?.getString(NAME).orEmpty() }
     private val roomListener by lazy {
         object : StatusCallback() {
-
             override fun onConnected(room: Room?) {
                 room?.remoteParticipants?.forEach { it.setListener(participantListener())}
             }
@@ -48,19 +47,6 @@ class PlaybackFragment : BaseFragment<PlaybackVM>(),
         }
     }
 
-    // Create an audio track
-    private val localAudioTrack by lazy { context?.let { LocalAudioTrack.create(it, true) } }
-
-    // Create a video track
-    private val localVideoTrack by lazy {
-        context?.let { ctx ->
-            LocalVideoTrack.create(ctx,
-                    true,
-                    CameraCapturer(ctx, CameraCapturer.CameraSource.FRONT_CAMERA))?.apply {
-                addRenderer(videoView)
-            }
-        }
-    }
     private var room: Room? = null
 
     override fun getScreenTitle() = NO_TITLE
@@ -95,6 +81,19 @@ class PlaybackFragment : BaseFragment<PlaybackVM>(),
         btnPlayback.setText(if (isPlayback) R.string.stop else R.string.play)
     }
 
+    // Create an audio track
+    private val localAudioTrack by lazy { context?.let { LocalAudioTrack.create(it, true) } }
+    // Create a video track
+    private val localVideoTrack by lazy {
+        context?.let { ctx ->
+            LocalVideoTrack.create(ctx,
+                    true,
+                    CameraCapturer(ctx, CameraCapturer.CameraSource.FRONT_CAMERA))?.apply {
+                addRenderer(videoView)
+            }
+        }
+    }
+
     private fun startPlayback() {
         safeLet(context, localAudioTrack, localVideoTrack) { ctx, audioTrack, videoTrack ->
             val connectOptions = ConnectOptions.Builder(BuildConfig.TWILIO_ACCESS_TOKEN)
@@ -114,18 +113,13 @@ class PlaybackFragment : BaseFragment<PlaybackVM>(),
 Track by rendering it on screen: */
     private fun participantListener(): RemoteParticipant.Listener {
         return object : RemoteParticipant.Listener {
-            override fun onDataTrackPublished(remoteParticipant: RemoteParticipant?, remoteDataTrackPublication: RemoteDataTrackPublication?) {
+            override fun onDataTrackPublished(remoteParticipant: RemoteParticipant?, remoteDataTrackPublication: RemoteDataTrackPublication?) {}
 
-            }
+            override fun onAudioTrackEnabled(remoteParticipant: RemoteParticipant?, remoteAudioTrackPublication: RemoteAudioTrackPublication?) {}
 
-            override fun onAudioTrackEnabled(remoteParticipant: RemoteParticipant?, remoteAudioTrackPublication: RemoteAudioTrackPublication?) {
-            }
+            override fun onAudioTrackPublished(remoteParticipant: RemoteParticipant?, remoteAudioTrackPublication: RemoteAudioTrackPublication?) {}
 
-            override fun onAudioTrackPublished(remoteParticipant: RemoteParticipant?, remoteAudioTrackPublication: RemoteAudioTrackPublication?) {
-            }
-
-            override fun onVideoTrackPublished(remoteParticipant: RemoteParticipant?, remoteVideoTrackPublication: RemoteVideoTrackPublication?) {
-            }
+            override fun onVideoTrackPublished(remoteParticipant: RemoteParticipant?, remoteVideoTrackPublication: RemoteVideoTrackPublication?) {}
 
             override fun onVideoTrackSubscribed(remoteParticipant: RemoteParticipant?, remoteVideoTrackPublication: RemoteVideoTrackPublication?, remoteVideoTrack: RemoteVideoTrack?) {
                 remoteVideoTrackPublication?.remoteVideoTrack?.addRenderer(primaryVideoView)
@@ -135,45 +129,31 @@ Track by rendering it on screen: */
                 remoteVideoTrackPublication?.remoteVideoTrack?.addRenderer(primaryVideoView)
             }
 
-            override fun onVideoTrackDisabled(remoteParticipant: RemoteParticipant?, remoteVideoTrackPublication: RemoteVideoTrackPublication?) {
-            }
+            override fun onVideoTrackDisabled(remoteParticipant: RemoteParticipant?, remoteVideoTrackPublication: RemoteVideoTrackPublication?) {}
 
-            override fun onVideoTrackUnsubscribed(remoteParticipant: RemoteParticipant?, remoteVideoTrackPublication: RemoteVideoTrackPublication?, remoteVideoTrack: RemoteVideoTrack?) {
-            }
+            override fun onVideoTrackUnsubscribed(remoteParticipant: RemoteParticipant?, remoteVideoTrackPublication: RemoteVideoTrackPublication?, remoteVideoTrack: RemoteVideoTrack?) {}
 
-            override fun onDataTrackSubscriptionFailed(remoteParticipant: RemoteParticipant?, remoteDataTrackPublication: RemoteDataTrackPublication?, twilioException: TwilioException?) {
-            }
+            override fun onDataTrackSubscriptionFailed(remoteParticipant: RemoteParticipant?, remoteDataTrackPublication: RemoteDataTrackPublication?, twilioException: TwilioException?) {}
 
-            override fun onAudioTrackDisabled(remoteParticipant: RemoteParticipant?, remoteAudioTrackPublication: RemoteAudioTrackPublication?) {
-            }
+            override fun onAudioTrackDisabled(remoteParticipant: RemoteParticipant?, remoteAudioTrackPublication: RemoteAudioTrackPublication?) {}
 
-            override fun onDataTrackSubscribed(remoteParticipant: RemoteParticipant?, remoteDataTrackPublication: RemoteDataTrackPublication?, remoteDataTrack: RemoteDataTrack?) {
-            }
+            override fun onDataTrackSubscribed(remoteParticipant: RemoteParticipant?, remoteDataTrackPublication: RemoteDataTrackPublication?, remoteDataTrack: RemoteDataTrack?) {}
 
-            override fun onAudioTrackUnsubscribed(remoteParticipant: RemoteParticipant?, remoteAudioTrackPublication: RemoteAudioTrackPublication?, remoteAudioTrack: RemoteAudioTrack?) {
-            }
+            override fun onAudioTrackUnsubscribed(remoteParticipant: RemoteParticipant?, remoteAudioTrackPublication: RemoteAudioTrackPublication?, remoteAudioTrack: RemoteAudioTrack?) {}
 
-            override fun onAudioTrackSubscribed(remoteParticipant: RemoteParticipant?, remoteAudioTrackPublication: RemoteAudioTrackPublication?, remoteAudioTrack: RemoteAudioTrack?) {
-            }
+            override fun onAudioTrackSubscribed(remoteParticipant: RemoteParticipant?, remoteAudioTrackPublication: RemoteAudioTrackPublication?, remoteAudioTrack: RemoteAudioTrack?) {}
 
-            override fun onVideoTrackSubscriptionFailed(remoteParticipant: RemoteParticipant?, remoteVideoTrackPublication: RemoteVideoTrackPublication?, twilioException: TwilioException?) {
-            }
+            override fun onVideoTrackSubscriptionFailed(remoteParticipant: RemoteParticipant?, remoteVideoTrackPublication: RemoteVideoTrackPublication?, twilioException: TwilioException?) {}
 
-            override fun onAudioTrackSubscriptionFailed(remoteParticipant: RemoteParticipant?, remoteAudioTrackPublication: RemoteAudioTrackPublication?, twilioException: TwilioException?) {
-            }
+            override fun onAudioTrackSubscriptionFailed(remoteParticipant: RemoteParticipant?, remoteAudioTrackPublication: RemoteAudioTrackPublication?, twilioException: TwilioException?) {}
 
-            override fun onAudioTrackUnpublished(remoteParticipant: RemoteParticipant?, remoteAudioTrackPublication: RemoteAudioTrackPublication?) {
-            }
+            override fun onAudioTrackUnpublished(remoteParticipant: RemoteParticipant?, remoteAudioTrackPublication: RemoteAudioTrackPublication?) {}
 
-            override fun onVideoTrackUnpublished(remoteParticipant: RemoteParticipant?, remoteVideoTrackPublication: RemoteVideoTrackPublication?) {
-            }
+            override fun onVideoTrackUnpublished(remoteParticipant: RemoteParticipant?, remoteVideoTrackPublication: RemoteVideoTrackPublication?) {}
 
-            override fun onDataTrackUnsubscribed(remoteParticipant: RemoteParticipant?, remoteDataTrackPublication: RemoteDataTrackPublication?, remoteDataTrack: RemoteDataTrack?) {
-            }
+            override fun onDataTrackUnsubscribed(remoteParticipant: RemoteParticipant?, remoteDataTrackPublication: RemoteDataTrackPublication?, remoteDataTrack: RemoteDataTrack?) {}
 
-            override fun onDataTrackUnpublished(remoteParticipant: RemoteParticipant?, remoteDataTrackPublication: RemoteDataTrackPublication?) {
-            }
-
+            override fun onDataTrackUnpublished(remoteParticipant: RemoteParticipant?, remoteDataTrackPublication: RemoteDataTrackPublication?) {}
         }
     }
 }

@@ -31,17 +31,6 @@ class PlaybackFragment : BaseFragment<PlaybackVM>(),
     override val layoutId = R.layout.fragment_red5pro_playback
     override val viewModelClass = PlaybackVM::class.java
 
-    private val config by lazy {
-        R5Configuration(R5StreamProtocol.SRTP,
-                "192.168.0.104",
-                8554,
-                "live",
-                3.0f).apply {
-            licenseKey = "XX5C-INYZ-HMMW-GNJS"
-            bundleID = VSApp.instance.packageName
-        }
-    }
-
     private var isPlayback = false
     private lateinit var stream: R5Stream
     private val streamName by lazy { arguments?.getString(NAME).orEmpty() }
@@ -74,6 +63,17 @@ class PlaybackFragment : BaseFragment<PlaybackVM>(),
         if (isPlayback) stopPlayback() else startPlayback()
         isPlayback = isPlayback.not()
         btnPlayback.setText(if (isPlayback) R.string.stop else R.string.play)
+    }
+
+    private val config by lazy {
+        R5Configuration(R5StreamProtocol.SRTP,
+                "192.168.0.104",
+                8554,
+                "live",
+                1.0f).apply {
+            licenseKey = "XX5C-INYZ-HMMW-GNJS"
+            bundleID = VSApp.instance.packageName
+        }
     }
 
     private fun startPlayback() {

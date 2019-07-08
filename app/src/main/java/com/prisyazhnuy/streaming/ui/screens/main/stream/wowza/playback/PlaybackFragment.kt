@@ -30,16 +30,7 @@ class PlaybackFragment : BaseFragment<PlaybackVM>(),
     override val layoutId = R.layout.fragment_wowza_playback
     override val viewModelClass = PlaybackVM::class.java
     override val containerId = R.id.container
-    private val streamPlayerConfig by lazy {
-        WOWZPlayerConfig().apply {
-            isPlayback = true
-            hostAddress = BuildConfig.WOWZA_HOST_ADDRESS
-            portNumber = BuildConfig.WOWZA_PORT
-            applicationName = BuildConfig.WOWZA_APP_NAME
-            streamName = arguments?.getString(NAME).orEmpty()
-            isAudioEnabled = true
-        }
-    }
+
     private val statusCallback by lazy { StatusCallback() }
 
     override fun getScreenTitle() = NO_TITLE
@@ -58,6 +49,17 @@ class PlaybackFragment : BaseFragment<PlaybackVM>(),
         statusCallback.statusLD.safeSingleObserve(this) {
             LOG.e("status: $it")
             showSnackBar(it)
+        }
+    }
+
+    private val streamPlayerConfig by lazy {
+        WOWZPlayerConfig().apply {
+            isPlayback = true
+            hostAddress = BuildConfig.WOWZA_HOST_ADDRESS
+            portNumber = BuildConfig.WOWZA_PORT
+            applicationName = BuildConfig.WOWZA_APP_NAME
+            streamName = arguments?.getString(NAME).orEmpty()
+            isAudioEnabled = true
         }
     }
 

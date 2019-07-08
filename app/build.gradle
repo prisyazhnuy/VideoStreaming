@@ -163,8 +163,8 @@ dependencies {
     implementation 'com.wowza.gocoder.sdk.android:com.wowza.gocoder.sdk:1.5b7@aar'
     //Twilio
     implementation 'com.twilio:video-android:3.2.2'
-//     Jitsi Meet
-    implementation('org.jitsi.react:jitsi-meet-sdk:2.1.0') {
+    //Jitsi Meet
+    implementation('org.jitsi.react:jitsi-meet-sdk:2.2.1') {
         transitive = true
     }
     // Glide

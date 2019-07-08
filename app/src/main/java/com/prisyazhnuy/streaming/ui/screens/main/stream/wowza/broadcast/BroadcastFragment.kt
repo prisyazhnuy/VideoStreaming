@@ -39,30 +39,27 @@ class BroadcastFragment : BaseFragment<BroadcastVM>(),
         }
     }
 
+    private val statusCallback by lazy { StatusCallback() }
+
     private val rxPermission by lazy { RxPermissions(this) }
     // Create an audio device instance for capturing and broadcasting audio
     private val goCoderAudioDevice by lazy { WOWZAudioDevice() }
     // Create a broadcaster instance
     private val goCoderBroadcaster by lazy { WOWZBroadcast() }
-    private val statusCallback by lazy { StatusCallback() }
-
     // Create a configuration instance for the broadcaster
     private val goCoderBroadcastConfig by lazy {
         WOWZBroadcastConfig(WOWZMediaConfig.FRAME_SIZE_640x480).apply {
-            // Set the connection properties for the target Wowza Streaming Engine server or Wowza Streaming Cloud live stream
+            // Set the connection properties for the target Wowza Streaming Engine server
+            // or Wowza Streaming Cloud live stream
             hostAddress = BuildConfig.WOWZA_HOST_ADDRESS
             portNumber = BuildConfig.WOWZA_PORT
             applicationName = BuildConfig.WOWZA_APP_NAME
             streamName = arguments?.getString(NAME).orEmpty()
-//            username = "wowzaStream"
-//            password = "314159265"
-            username = "client40770"
-            password = "fd80c179"
-
-// Designate the camera preview as the video source
+            username = "userName"
+            password = "123456"
+            // Designate the camera preview as the video source
             videoBroadcaster = cameraPreview
-
-// Designate the audio device as the audio broadcaster
+            // Designate the audio device as the audio broadcaster
             audioBroadcaster = goCoderAudioDevice
         }
     }
@@ -106,30 +103,23 @@ class BroadcastFragment : BaseFragment<BroadcastVM>(),
 
     private fun initWowza() {
         // Initialize the GoCoder SDK
-        val sdk = WowzaGoCoder.init(context, BuildConfig.WOWZA_API_KEY)
-
+        WowzaGoCoder.init(context, BuildConfig.WOWZA_API_KEY)
         // If initialization failed, retrieve the last error and display it
-        WowzaGoCoder.getLastError()?.let {
-            LOG.e(message = "GoCoder SDK error: ${it.errorDescription}")
-        }
+        WowzaGoCoder.getLastError()?.let { LOG.e(message = "GoCoder SDK error: ${it.errorDescription}") }
     }
 
-    private fun showPreview() {
-        withNotNull(cameraPreview) {
-            if (isPreviewPaused) onResume() else startPreview(WOWZMediaConfig().apply {
-                setCamera(WOWZCamera.DIRECTION_FRONT)
-            })
-        }
-    }
+    private fun showPreview() =
+            withNotNull(cameraPreview) {
+                if (isPreviewPaused) onResume() else startPreview(WOWZMediaConfig().apply {
+                    setCamera(WOWZCamera.DIRECTION_FRONT)
+                })
+            }
 
     private fun startBroadcast() {
-// Ensure the minimum set of configuration settings have been specified necessary to
+        // Ensure the minimum set of configuration settings have been specified necessary to
         // initiate a broadcast streaming session
         val configValidationError = goCoderBroadcastConfig.validateForBroadcast()
-
-        configValidationError?.let {
-            showSnackBar(it.errorDescription)
-        } ?: run {
+        configValidationError?.let { showSnackBar(it.errorDescription) } ?: run {
             if (goCoderBroadcaster.status.isRunning) {
                 // Stop the broadcast that is currently running
                 goCoderBroadcaster.endBroadcast(statusCallback)
