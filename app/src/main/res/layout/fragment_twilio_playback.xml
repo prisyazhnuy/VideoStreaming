@@ -9,16 +9,13 @@
     <com.twilio.video.VideoView
         android:id="@+id/videoView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/primaryVideoView"/>
+        android:layout_height="match_parent" />
 
-    <com.twilio.video.VideoView
-        android:id="@+id/primaryVideoView"
-        android:layout_width="200dp"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_above="@id/btnPlayback"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="16dp" />
+        android:layout_above="@id/btnPlayback"/>
 
     <Button
         android:id="@+id/btnPlayback"
