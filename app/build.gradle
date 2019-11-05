@@ -169,10 +169,15 @@ dependencies {
         exclude group: "com.facebook.react", module: "react-native-webrtc"
     }
     // Glide
-    implementation('com.github.bumptech.glide:glide:4.7.1') {
-        exclude group: "com.android.support", module: "glide"
-    }
-    implementation('com.github.bumptech.glide:annotations:4.7.1') {
-        exclude group: "com.android.support", module: "annotations"
-    }
+//    implementation('com.github.bumptech.glide:glide:4.7.1') {
+//        exclude group: "com.android.support", module: "glide"
+//    }
+//    implementation('com.github.bumptech.glide:annotations:3.7.0') {
+//        exclude group: "com.android.support", module: "annotations"
+//    }
+//    implementation ('com.github.bumptech.glide:glide:3.7.0') {
+//        exclude group: "com.android.support", module: "glide"
+//    }
+
+
 }

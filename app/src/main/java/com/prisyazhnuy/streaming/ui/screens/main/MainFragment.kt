@@ -1,13 +1,17 @@
 package com.prisyazhnuy.streaming.ui.screens.main
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.SimpleTarget
+import com.bumptech.glide.request.transition.Transition
 import com.cleveroad.bootstrap.kotlin_ext.setClickListeners
+import com.cleveroad.bootstrap.kotlin_validators.Validator
 import com.prisyazhnuy.streaming.R
 import com.prisyazhnuy.streaming.ui.base.BaseFragment
 import com.prisyazhnuy.streaming.utils.bindInterfaceOrThrow
-import kotlinx.android.synthetic.main.activity_splash.*
 import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainFragment : BaseFragment<MainVM>(),
@@ -36,6 +40,7 @@ class MainFragment : BaseFragment<MainVM>(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setClickListeners(btnWowza, btnRed5Pro, btnTwilio, btnJitsi)
+
     }
 
     override fun onClick(v: View?) {
