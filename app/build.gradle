@@ -115,6 +115,7 @@ dependencies {
     androidTestImplementation 'androidx.arch.core:core-testing:2.1.0'
     implementation 'com.squareup.okhttp3:mockwebserver:4.2.1'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "androidx.annotation:annotation:1.1.0"
     // Support
     implementation supportDependencies.lifecycleExtension
     implementation supportDependencies.constraintlayout
