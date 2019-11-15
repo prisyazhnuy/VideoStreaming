@@ -108,12 +108,12 @@ dependencies {
     def testVersion = "1.1.0"
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation "androidx.test:runner:$testVersion"
     androidTestImplementation "androidx.test:rules:$testVersion"
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
-    androidTestImplementation 'androidx.arch.core:core-testing:2.0.1'
-    implementation 'com.squareup.okhttp3:mockwebserver:3.12.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation 'androidx.arch.core:core-testing:2.1.0'
+    implementation 'com.squareup.okhttp3:mockwebserver:4.2.1'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     // Support
     implementation supportDependencies.lifecycleExtension

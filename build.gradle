@@ -48,7 +48,7 @@ ext {
 
     bootstrapVersion = "0.1.9"
 
-    stethoVersoin = "1.5.0"
+    stethoVersoin = "1.5.1"
 
     retrofit_version = '2.3.0'
 
